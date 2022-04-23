@@ -1,25 +1,17 @@
-import logo from './logo.svg';
+import lightning from './lightning.png';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <header>
+        <h1>Generate a <span>random password</span></h1>
+        <h3>Never use an insecure password again.</h3>
+        <button><img src={lightning} alt='lightning'/>generate password</button>
       </header>
+      <div id='passwords'></div>
     </div>
-  );
+  )
 }
 
 export default App;
