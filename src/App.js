@@ -6,7 +6,19 @@ import {useState} from 'react'
 
 function App() {
 
-  const [charSelectors, setCharSelectors] = useState({'!': true, '@': true})
+  const [charSelectors, setCharSelectors] = useState({
+    '!': true, 
+    '@': true,
+    '#': true,
+    '$': true,
+    '%': false,
+    '&': true,
+    '*': true,
+    '?': true,
+    'upper': true,
+    'lower': true,
+    'num': true
+  })
   const [numCharacters, setNumCharacters] = useState(10)
   const [passwords, setPasswords] = useState([])
 
@@ -18,20 +30,20 @@ function App() {
     const upperAlpha = lowerAlpha.map(char => char.toUpperCase())
     const numbers = [...Array(10).keys()]
 
-    for (let selection of charSelectors){
+    for (let selection in charSelectors){
           
       switch (selection){
         case 'lower':
-          newCharacters.concat(lowerAlpha);
+          charSelectors[selection] && newCharacters.concat(lowerAlpha);
           break;
         case 'upper':
-          newCharacters.concat(upperAlpha);
+          charSelectors[selection] && newCharacters.concat(upperAlpha);
           break;
         case 'numbers':
-          newCharacters.concat(numbers);
+          charSelectors[selection] && newCharacters.concat(numbers);
           break;
         default:
-          newCharacters.push(selection)
+          charSelectors[selection] && newCharacters.push(selection)
       }
 
     }
@@ -46,8 +58,12 @@ function App() {
     }
   }
   
-  function handleNumCharChange(e){
-    setNumCharacters(eval(e.target.value))
+  function handleNumCharChange(event){
+    setNumCharacters(eval(event.target.value))
+  }
+
+  function handleCheck(event){
+    console.log(event.target.labels[0].innerText)
   }
 
   console.log(charSelectors['!'])
@@ -62,40 +78,44 @@ function App() {
           <input type={'number'} min= '1' max='20' value= {numCharacters} onChange={handleNumCharChange}/>
         </label>
         <label>
-          <input id='selector-upper' type={'checkbox'} value="on"/>
+          <input id='selector-upper' type={'checkbox'} checked= {charSelectors['upper']} onChange={handleCheck}/>
           uppercase
         </label>
         <label>
-          <input id='selector-lower' type={'checkbox'}/>
+          <input id='selector-lower' type={'checkbox'} checked= {charSelectors['lower']} onChange={handleCheck}/>
           lowercase
         </label>
         <label>
-          <input id='selector-num' type={'checkbox'} defaultChecked= {true}/>
+          <input id='selector-num' type={'checkbox'} checked= {charSelectors['num']} onChange={handleCheck}/>
           numbers
         </label>
         <label>
-          <input id='selector-!' type={'checkbox'} value="on"/>
+          <input id='selector-!' type={'checkbox'} checked= {charSelectors['!']} onChange={handleCheck}/>
           !
         </label>
         <label>
-          <input id='selector-@' type={'checkbox'} value="on"/>
+          <input id='selector-@' type={'checkbox'} checked= {charSelectors['&']} onChange={handleCheck}/>
           @
         </label>
         <label>
-          <input id='selector-$' type={'checkbox'} value="on"/>
+          <input id='selector-$' type={'checkbox'} checked= {charSelectors['$']} onChange={handleCheck}/>
           $
         </label>
         <label>
-          <input id='selector-%' type={'checkbox'} value="on"/>
+          <input id='selector-%' type={'checkbox'} checked= {charSelectors['%']} onChange={handleCheck}/>
           %
         </label>
         <label>
-          <input id='selector-&' type={'checkbox'} value="on"/>
+          <input id='selector-&' type={'checkbox'} checked= {charSelectors['&']} onChange={handleCheck}/>
           &
         </label>
         <label>
-          <input id='selector-*' type={'checkbox'} value="on"/>
+          <input id='selector-*' type={'checkbox'} checked= {charSelectors['*']} onChange={handleCheck}/>
           *
+        </label>
+        <label>
+          <input id='selector-?' type={'checkbox'} checked= {charSelectors['?']} onChange={handleCheck}/>
+          ?
         </label>
 
         <button><img src={lightning} alt=''/>generate password</button>
