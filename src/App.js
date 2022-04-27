@@ -34,28 +34,32 @@ function App() {
           
       switch (selection){
         case 'lower':
-          charSelectors[selection] && newCharacters.concat(lowerAlpha);
+          charSelectors[selection] && newCharacters.push(...lowerAlpha);
           break;
         case 'upper':
-          charSelectors[selection] && newCharacters.concat(upperAlpha);
+          charSelectors[selection] && newCharacters.push(...upperAlpha);
           break;
-        case 'numbers':
-          charSelectors[selection] && newCharacters.concat(numbers);
+        case 'num':
+          charSelectors[selection] && newCharacters.push(...numbers);
           break;
         default: // fix to use the object format
+
           charSelectors[selection] && newCharacters.push(selection)
       }
 
     }
+    console.log(`new characters: ${newCharacters}`)
     availCharacters = newCharacters
 
     for (let i = 0; i < 4; i++){
       let password = ""
       for (let i = 0; i < numCharacters; i++){
-        password.concat(availCharacters[Math.floor(Math.random() * availCharacters.length)])
+        password += availCharacters[Math.floor(Math.random() * availCharacters.length)]
       }
+      console.log(`password: ${password}`)
       setPasswords(prev => [...prev, password])
     }
+    console.log(`passwords: ${passwords}`)
   }
   
   function handleNumCharChange(event){
@@ -63,14 +67,24 @@ function App() {
   }
 
   function handleCheck(event){
-    const char = event.target.labels[0].innerText
+    let char = event.target.labels[0].innerText
+    switch (char){
+      case 'uppercase' :
+         char = 'upper'
+         break
+      case 'lowercase' :
+         char = 'lower'
+         break
+      case 'numbers' :
+         char = 'num'
+         break
+      default:
+        break
+    }
     setCharSelectors(prev => {
       const newValue = {[char]:!prev[char]}
-      console.log(newValue)
       return {...prev , ...newValue}
     })
-    
-    // console.log(charSelectors)
   }
 
 
@@ -100,7 +114,7 @@ function App() {
           !
         </label>
         <label>
-          <input id='selector-@' type={'checkbox'} checked= {charSelectors['&']} onChange={handleCheck}/>
+          <input id='selector-@' type={'checkbox'} checked= {charSelectors['@']} onChange={handleCheck}/>
           @
         </label>
         <label>
@@ -124,7 +138,7 @@ function App() {
           ?
         </label>
 
-        <button><img src={lightning} alt=''/>generate password</button>
+        <button onClick={generateRandom}><img src={lightning} alt=''/>generate password</button>
       </header>
       <div id='passwords'></div>
     </div>
