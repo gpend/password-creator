@@ -11,7 +11,7 @@ function App() {
     '@': true,
     '#': true,
     '$': true,
-    '%': false,
+    '%': true,
     '&': true,
     '*': true,
     '?': true,
@@ -42,7 +42,7 @@ function App() {
         case 'numbers':
           charSelectors[selection] && newCharacters.concat(numbers);
           break;
-        default:
+        default: // fix to use the object format
           charSelectors[selection] && newCharacters.push(selection)
       }
 
@@ -63,10 +63,16 @@ function App() {
   }
 
   function handleCheck(event){
-    console.log(event.target.labels[0].innerText)
+    const char = event.target.labels[0].innerText
+    setCharSelectors(prev => {
+      const newValue = {[char]:!prev[char]}
+      console.log(newValue)
+      return {...prev , ...newValue}
+    })
+    
+    // console.log(charSelectors)
   }
 
-  console.log(charSelectors['!'])
 
   return (
     <div className="App">
