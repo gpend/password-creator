@@ -19,8 +19,9 @@ function App() {
     'lower': true,
     'num': true
   })
-  const [numCharacters, setNumCharacters] = useState(10)
-  const [passwords, setPasswords] = useState([])
+
+  const [numCharacters, setNumCharacters] = useState(12)
+  const [passwords, setPasswords] = useState(['','','',''])
 
   let availCharacters = []
 
@@ -29,6 +30,7 @@ function App() {
     const lowerAlpha = ['a','b','c','d','e','f','g','h','i','j','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
     const upperAlpha = lowerAlpha.map(char => char.toUpperCase())
     const numbers = [...Array(10).keys()]
+    setPasswords(['','','','',])
 
     for (let selection in charSelectors){
           
@@ -42,13 +44,11 @@ function App() {
         case 'num':
           charSelectors[selection] && newCharacters.push(...numbers);
           break;
-        default: // fix to use the object format
-
-          charSelectors[selection] && newCharacters.push(selection)
+        default:
+          charSelectors[selection] && newCharacters.push(selection);
       }
 
     }
-    console.log(`new characters: ${newCharacters}`)
     availCharacters = newCharacters
 
     for (let i = 0; i < 4; i++){
@@ -56,14 +56,12 @@ function App() {
       for (let i = 0; i < numCharacters; i++){
         password += availCharacters[Math.floor(Math.random() * availCharacters.length)]
       }
-      console.log(`password: ${password}`)
       setPasswords(prev => [...prev, password])
     }
-    console.log(`passwords: ${passwords}`)
   }
   
   function handleNumCharChange(event){
-    setNumCharacters(eval(event.target.value))
+    setNumCharacters(Number(event.target.value))
   }
 
   function handleCheck(event){
@@ -87,7 +85,25 @@ function App() {
     })
   }
 
-
+  function PasswordHTML (){
+    return (
+      passwords.map((password, index) =>{
+        return (
+          <div className='password' id={`password-${index}`} key={index}>
+            <p onClick={()=>{
+              navigator.clipboard.writeText(password)
+              let passHTML = document.getElementById("password-"+index)
+              passHTML.innerHTML += "<p> Password copied</p>"
+              setTimeout(() => {
+                passHTML.innerHTML = passHTML.innerHTML.slice(0,-23)
+              }, 5000);
+            }}>{password}</p>
+          </div> 
+        )
+      })
+    )
+  }
+//
   return (
     <div className="App">
       <header>
@@ -140,7 +156,10 @@ function App() {
 
         <button onClick={generateRandom}><img src={lightning} alt=''/>generate password</button>
       </header>
-      <div id='passwords'></div>
+      <div id='passwords'>
+        Click to copy the password to your clipboard
+        <PasswordHTML />
+      </div>
     </div>
   )
 }
