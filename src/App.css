@@ -1,25 +1,67 @@
-.App {
-  max-width: 80vw;
-  margin: auto;
-}
-header{
-  text-align: center;
-}
-header h1{
-  text-shadow: 1px 1px 2px #282c3493;
+body{
+  background-color: #1C1C1C;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.App {
+  max-width: 90vw;
+  padding: 1em;
+  margin: auto;
+  font-family: 'Karla', sans-serif;
+  background-color: #1F2937;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+header{
+  text-align: left;
+
+}
+
+header h1{
+  text-shadow: 3px 4px 2px #727b8d93;
+  color: white;
+}
+
+header h1 span{
+  display: block;
+  color: #4ADF86;
+}
+
+.selectors{
+  display: flex;
+  /* flex-direction: column; */
+  max-height: 9.5vh;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.selectors label{
+  margin-left: .5rem;
+}
+
+#char-num{
+  display: block;
+}
+
+#passwords{
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.password{
+  height: 3rem;
+  margin: 1em auto;
+  max-width: max-content;
+  min-width: 10rem;
+  background-color: #4ADF86;
+  border-radius: 15px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.password p{
+
+  margin-left: 1em;
+  margin-right: 1em;
 }

@@ -30,7 +30,7 @@ function App() {
     const lowerAlpha = ['a','b','c','d','e','f','g','h','i','j','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
     const upperAlpha = lowerAlpha.map(char => char.toUpperCase())
     const numbers = [...Array(10).keys()]
-    setPasswords(['','','','',])
+    setPasswords([])
 
     for (let selection in charSelectors){
           
@@ -103,61 +103,67 @@ function App() {
       })
     )
   }
-//
+
   return (
     <div className="App">
       <header>
         <h1>Generate a <span>random password</span></h1>
-        <h3>Never use an insecure password again.</h3>
-        <label>
-          Number of characters
-          <input type={'number'} min= '1' max='20' value= {numCharacters} onChange={handleNumCharChange}/>
-        </label>
-        <label>
-          <input id='selector-upper' type={'checkbox'} checked= {charSelectors['upper']} onChange={handleCheck}/>
-          uppercase
-        </label>
-        <label>
-          <input id='selector-lower' type={'checkbox'} checked= {charSelectors['lower']} onChange={handleCheck}/>
-          lowercase
-        </label>
-        <label>
-          <input id='selector-num' type={'checkbox'} checked= {charSelectors['num']} onChange={handleCheck}/>
-          numbers
-        </label>
-        <label>
-          <input id='selector-!' type={'checkbox'} checked= {charSelectors['!']} onChange={handleCheck}/>
-          !
-        </label>
-        <label>
-          <input id='selector-@' type={'checkbox'} checked= {charSelectors['@']} onChange={handleCheck}/>
-          @
-        </label>
-        <label>
-          <input id='selector-$' type={'checkbox'} checked= {charSelectors['$']} onChange={handleCheck}/>
-          $
-        </label>
-        <label>
-          <input id='selector-%' type={'checkbox'} checked= {charSelectors['%']} onChange={handleCheck}/>
-          %
-        </label>
-        <label>
-          <input id='selector-&' type={'checkbox'} checked= {charSelectors['&']} onChange={handleCheck}/>
-          &
-        </label>
-        <label>
-          <input id='selector-*' type={'checkbox'} checked= {charSelectors['*']} onChange={handleCheck}/>
-          *
-        </label>
-        <label>
-          <input id='selector-?' type={'checkbox'} checked= {charSelectors['?']} onChange={handleCheck}/>
-          ?
-        </label>
+        <p>Never use an insecure password again.</p>
+        <div className='selectors'>
+          <label id='char-num'>
+            Number of characters
+            <input type={'number'} min= '1' max='20' value= {numCharacters} onChange={handleNumCharChange}/>
+          </label>
+          <label>
+            <input id='selector-upper' type={'checkbox'} checked= {charSelectors['upper']} onChange={handleCheck}/>
+            uppercase
+          </label>
+          <label>
+            <input id='selector-lower' type={'checkbox'} checked= {charSelectors['lower']} onChange={handleCheck}/>
+            lowercase
+          </label>
+          <label>
+            <input id='selector-num' type={'checkbox'} checked= {charSelectors['num']} onChange={handleCheck}/>
+            numbers
+          </label>
+          <label>
+            <input id='selector-!' type={'checkbox'} checked= {charSelectors['!']} onChange={handleCheck}/>
+            !
+          </label>
+          <label>
+            <input id='selector-@' type={'checkbox'} checked= {charSelectors['@']} onChange={handleCheck}/>
+            @
+          </label>
+          <label>
+            <input id='selector-$' type={'checkbox'} checked= {charSelectors['$']} onChange={handleCheck}/>
+            $
+          </label>
+          <label>
+            <input id='selector-%' type={'checkbox'} checked= {charSelectors['%']} onChange={handleCheck}/>
+            %
+          </label>
+          <label>
+            <input id='selector-&' type={'checkbox'} checked= {charSelectors['&']} onChange={handleCheck}/>
+            &
+          </label>
+          <label>
+            <input id='selector-*' type={'checkbox'} checked= {charSelectors['*']} onChange={handleCheck}/>
+            *
+          </label>
+          <label>
+            <input id='selector-?' type={'checkbox'} checked= {charSelectors['?']} onChange={handleCheck}/>
+            ?
+          </label>
+          <label>
+            <input id='selector-#' type={'checkbox'} checked= {charSelectors['#']} onChange={handleCheck}/>
+            #
+          </label>
+        </div>
 
         <button onClick={generateRandom}><img src={lightning} alt=''/>generate password</button>
       </header>
+      Click to copy the password to your clipboard
       <div id='passwords'>
-        Click to copy the password to your clipboard
         <PasswordHTML />
       </div>
     </div>
@@ -166,3 +172,4 @@ function App() {
 
 export default App;
 
+//Click to copy the password to your clipboard // should be tap at smaller media sizes
