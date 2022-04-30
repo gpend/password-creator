@@ -4,6 +4,7 @@ body{
 
 .App {
   max-width: 90vw;
+  height: 95vh;
   padding: 1em;
   margin: auto;
   font-family: 'Karla', sans-serif;
@@ -35,11 +36,34 @@ header h1 span{
 }
 
 .selectors label{
-  margin-left: .5rem;
+  margin-left: .75rem;
+  margin-top: 1rem;
 }
 
 #char-num{
   display: block;
+}
+
+#char-num > span{
+  margin-right: 1rem;
+}
+
+button{
+  background-color: #10B981;
+  color: white;
+  text-align:center;
+  display: flex;
+  align-items: center;
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+}
+
+button img{
+  width: 20px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 5px;
 }
 
 #passwords{
@@ -53,7 +77,8 @@ header h1 span{
   margin: 1em auto;
   max-width: max-content;
   min-width: 10rem;
-  background-color: #4ADF86;
+  background-color: #273549;
+  color: #4ADF86;
   border-radius: 15px;
   text-align: center;
   display: flex;

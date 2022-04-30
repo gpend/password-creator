@@ -21,7 +21,7 @@ function App() {
   })
 
   const [numCharacters, setNumCharacters] = useState(12)
-  const [passwords, setPasswords] = useState(['','','',''])
+  const [passwords, setPasswords] = useState(['...','...','...','...'])
 
   let availCharacters = []
 
@@ -109,11 +109,11 @@ function App() {
       <header>
         <h1>Generate a <span>random password</span></h1>
         <p>Never use an insecure password again.</p>
-        <div className='selectors'>
           <label id='char-num'>
-            Number of characters
+            <span>Number of characters</span>
             <input type={'number'} min= '1' max='20' value= {numCharacters} onChange={handleNumCharChange}/>
           </label>
+        <div className='selectors'>
           <label>
             <input id='selector-upper' type={'checkbox'} checked= {charSelectors['upper']} onChange={handleCheck}/>
             uppercase
@@ -160,7 +160,7 @@ function App() {
           </label>
         </div>
 
-        <button onClick={generateRandom}><img src={lightning} alt=''/>generate password</button>
+        <button onClick={generateRandom}><img src={lightning} alt=''/>Generate Password</button>
       </header>
       Click to copy the password to your clipboard
       <div id='passwords'>
