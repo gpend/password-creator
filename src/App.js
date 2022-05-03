@@ -53,9 +53,14 @@ function App() {
 
     for (let i = 0; i < 4; i++){
       let password = ""
-      for (let i = 0; i < numCharacters; i++){
+      if (availCharacters.length < 8){
+        console.log(availCharacters.length)
+        password = "really?"
+      }else{for (let i = 0; i < numCharacters; i++){
         password += availCharacters[Math.floor(Math.random() * availCharacters.length)]
+        }
       }
+      
       setPasswords(prev => [...prev, password])
     }
   }
