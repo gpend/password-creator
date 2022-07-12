@@ -1,40 +1,62 @@
 import lightning from './lightning.png';
 import './App.css';
-import {useState} from 'react'
-
-
+import { useState } from 'react';
 
 function App() {
-
   const [charSelectors, setCharSelectors] = useState({
-    '!': true, 
+    '!': true,
     '@': true,
     '#': true,
-    '$': true,
+    $: true,
     '%': true,
     '&': true,
     '*': true,
     '?': true,
-    'upper': true,
-    'lower': true,
-    'num': true
-  })
+    upper: true,
+    lower: true,
+    num: true,
+  });
 
-  const [numCharacters, setNumCharacters] = useState(12)
-  const [passwords, setPasswords] = useState(['...','...','...','...'])
+  const [numCharacters, setNumCharacters] = useState(12);
+  const [passwords, setPasswords] = useState(['...', '...', '...', '...']);
 
-  let availCharacters = []
+  let availCharacters = [];
 
-  function generateRandom (){ 
-    let newCharacters = []
-    const lowerAlpha = ['a','b','c','d','e','f','g','h','i','j','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
-    const upperAlpha = lowerAlpha.map(char => char.toUpperCase())
-    const numbers = [...Array(10).keys()]
-    setPasswords([])
+  function generateRandom() {
+    let newCharacters = [];
+    const lowerAlpha = [
+      'a',
+      'b',
+      'c',
+      'd',
+      'e',
+      'f',
+      'g',
+      'h',
+      'i',
+      'j',
+      'l',
+      'm',
+      'n',
+      'o',
+      'p',
+      'q',
+      'r',
+      's',
+      't',
+      'u',
+      'v',
+      'w',
+      'x',
+      'y',
+      'z',
+    ];
+    const upperAlpha = lowerAlpha.map((char) => char.toUpperCase());
+    const numbers = [...Array(10).keys()];
+    setPasswords([]);
 
-    for (let selection in charSelectors){
-          
-      switch (selection){
+    for (let selection in charSelectors) {
+      switch (selection) {
         case 'lower':
           charSelectors[selection] && newCharacters.push(...lowerAlpha);
           break;
@@ -47,132 +69,203 @@ function App() {
         default:
           charSelectors[selection] && newCharacters.push(selection);
       }
-
     }
-    availCharacters = newCharacters
+    availCharacters = newCharacters;
 
-    for (let i = 0; i < 4; i++){
-      let password = ""
-      if (availCharacters.length < 8){
-        console.log(availCharacters.length)
-        password = "really?"
-      }else{for (let i = 0; i < numCharacters; i++){
-        password += availCharacters[Math.floor(Math.random() * availCharacters.length)]
+    for (let i = 0; i < 4; i++) {
+      let password = '';
+      if (availCharacters.length < 8) {
+        console.log(availCharacters.length);
+        password = 'really?';
+      } else {
+        for (let i = 0; i < numCharacters; i++) {
+          password +=
+            availCharacters[Math.floor(Math.random() * availCharacters.length)];
         }
       }
-      
-      setPasswords(prev => [...prev, password])
+
+      setPasswords((prev) => [...prev, password]);
     }
   }
-  
-  function handleNumCharChange(event){
-    setNumCharacters(Number(event.target.value))
+
+  function handleNumCharChange(event) {
+    setNumCharacters(Number(event.target.value));
   }
 
-  function handleCheck(event){
-    let char = event.target.labels[0].innerText
-    switch (char){
-      case 'uppercase' :
-         char = 'upper'
-         break
-      case 'lowercase' :
-         char = 'lower'
-         break
-      case 'numbers' :
-         char = 'num'
-         break
+  function handleCheck(event) {
+    let char = event.target.labels[0].innerText;
+    switch (char) {
+      case 'uppercase':
+        char = 'upper';
+        break;
+      case 'lowercase':
+        char = 'lower';
+        break;
+      case 'numbers':
+        char = 'num';
+        break;
       default:
-        break
+        break;
     }
-    setCharSelectors(prev => {
-      const newValue = {[char]:!prev[char]}
-      return {...prev , ...newValue}
-    })
+    setCharSelectors((prev) => {
+      const newValue = { [char]: !prev[char] };
+      return { ...prev, ...newValue };
+    });
   }
 
-  function PasswordHTML (){
-    return (
-      passwords.map((password, index) =>{
-        return (
-          <div className='password' id={`password-${index}`} key={index}>
-            <p onClick={()=>{
-              navigator.clipboard.writeText(password)
-              let passHTML = document.getElementById("password-"+index)
-              passHTML.innerHTML += "<p> Password copied</p>"
-              setTimeout(() => {
-                passHTML.innerHTML = passHTML.innerHTML.slice(0,-23)
-              }, 5000);
-            }}>{password}</p>
-          </div> 
-        )
-      })
-    )
+  function PasswordHTML() {
+    return passwords.map((password, index) => {
+      return (
+        <div className='password-box' id={`password-${index}`} key={index}>
+          <div className='password'>
+            <p
+              onClick={() => {
+                navigator.clipboard.writeText(password);
+                let passHTML = document.getElementById('password-' + index);
+                passHTML.classList.add('password-clicked');
+                setTimeout(() => {
+                  passHTML.classList.remove('password-clicked');
+                }, 5000);
+              }}
+            >
+              {password}
+            </p>
+          </div>
+        </div>
+      );
+    });
   }
 
   return (
-    <div className="App">
+    <div className='App'>
       <header>
-        <h1>Generate a <span>random password</span></h1>
+        <h1>
+          Generate a <span>random password</span>
+        </h1>
         <p>Never use an insecure password again.</p>
-          <label id='char-num'>
-            <span>Number of characters</span>
-            <input type={'number'} min= '1' max='20' value= {numCharacters} onChange={handleNumCharChange}/>
-          </label>
+        <label id='char-num'>
+          <span>Number of characters</span>
+          <input
+            type={'number'}
+            min='1'
+            max='20'
+            value={numCharacters}
+            onChange={handleNumCharChange}
+          />
+        </label>
         <div className='selectors'>
           <label>
-            <input id='selector-upper' type={'checkbox'} checked= {charSelectors['upper']} onChange={handleCheck}/>
+            <input
+              id='selector-upper'
+              type={'checkbox'}
+              checked={charSelectors['upper']}
+              onChange={handleCheck}
+            />
             uppercase
           </label>
           <label>
-            <input id='selector-lower' type={'checkbox'} checked= {charSelectors['lower']} onChange={handleCheck}/>
+            <input
+              id='selector-lower'
+              type={'checkbox'}
+              checked={charSelectors['lower']}
+              onChange={handleCheck}
+            />
             lowercase
           </label>
           <label>
-            <input id='selector-num' type={'checkbox'} checked= {charSelectors['num']} onChange={handleCheck}/>
+            <input
+              id='selector-num'
+              type={'checkbox'}
+              checked={charSelectors['num']}
+              onChange={handleCheck}
+            />
             numbers
           </label>
           <label>
-            <input id='selector-!' type={'checkbox'} checked= {charSelectors['!']} onChange={handleCheck}/>
+            <input
+              id='selector-!'
+              type={'checkbox'}
+              checked={charSelectors['!']}
+              onChange={handleCheck}
+            />
             !
           </label>
           <label>
-            <input id='selector-@' type={'checkbox'} checked= {charSelectors['@']} onChange={handleCheck}/>
+            <input
+              id='selector-@'
+              type={'checkbox'}
+              checked={charSelectors['@']}
+              onChange={handleCheck}
+            />
             @
           </label>
           <label>
-            <input id='selector-$' type={'checkbox'} checked= {charSelectors['$']} onChange={handleCheck}/>
+            <input
+              id='selector-$'
+              type={'checkbox'}
+              checked={charSelectors['$']}
+              onChange={handleCheck}
+            />
             $
           </label>
           <label>
-            <input id='selector-%' type={'checkbox'} checked= {charSelectors['%']} onChange={handleCheck}/>
+            <input
+              id='selector-%'
+              type={'checkbox'}
+              checked={charSelectors['%']}
+              onChange={handleCheck}
+            />
             %
           </label>
           <label>
-            <input id='selector-&' type={'checkbox'} checked= {charSelectors['&']} onChange={handleCheck}/>
+            <input
+              id='selector-&'
+              type={'checkbox'}
+              checked={charSelectors['&']}
+              onChange={handleCheck}
+            />
             &
           </label>
           <label>
-            <input id='selector-*' type={'checkbox'} checked= {charSelectors['*']} onChange={handleCheck}/>
+            <input
+              id='selector-*'
+              type={'checkbox'}
+              checked={charSelectors['*']}
+              onChange={handleCheck}
+            />
             *
           </label>
           <label>
-            <input id='selector-?' type={'checkbox'} checked= {charSelectors['?']} onChange={handleCheck}/>
+            <input
+              id='selector-?'
+              type={'checkbox'}
+              checked={charSelectors['?']}
+              onChange={handleCheck}
+            />
             ?
           </label>
           <label>
-            <input id='selector-#' type={'checkbox'} checked= {charSelectors['#']} onChange={handleCheck}/>
+            <input
+              id='selector-#'
+              type={'checkbox'}
+              checked={charSelectors['#']}
+              onChange={handleCheck}
+            />
             #
           </label>
         </div>
 
-        <button onClick={generateRandom}><img src={lightning} alt=''/>Generate Password</button>
+        <button onClick={generateRandom}>
+          <img src={lightning} alt='' />
+          Generate Password
+        </button>
       </header>
       Click to copy the password to your clipboard
       <div id='passwords'>
         <PasswordHTML />
       </div>
     </div>
-  )
+  );
 }
 
 export default App;
