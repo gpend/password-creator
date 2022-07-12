@@ -17,12 +17,14 @@ function App() {
     num: true,
   });
 
+  // console.log(Object.keys(charSelectors));
+
   const [numCharacters, setNumCharacters] = useState(12);
   const [passwords, setPasswords] = useState(['...', '...', '...', '...']);
 
   let availCharacters = [];
 
-  function generateRandom() {
+  function generateRandomPassword() {
     let newCharacters = [];
     const lowerAlpha = [
       'a',
@@ -136,6 +138,37 @@ function App() {
     });
   }
 
+  function SelectorHTML() {
+    return Object.keys(charSelectors).map((charKey) => {
+      let labelText;
+      switch (charKey) {
+        case 'lower':
+          labelText = 'lowercase';
+          break;
+        case 'upper':
+          labelText = 'uppercase';
+          break;
+        case 'num':
+          labelText = 'numbers';
+          break;
+        default:
+          labelText = charKey;
+      }
+
+      return (
+        <label key={charKey}>
+          <input
+            id={`selector-${charKey}`}
+            type={'checkbox'}
+            checked={charSelectors[charKey]}
+            onChange={handleCheck}
+          />
+          {labelText}
+        </label>
+      );
+    });
+  }
+
   return (
     <div className='App'>
       <header>
@@ -153,109 +186,12 @@ function App() {
             onChange={handleNumCharChange}
           />
         </label>
+
         <div className='selectors'>
-          <label>
-            <input
-              id='selector-upper'
-              type={'checkbox'}
-              checked={charSelectors['upper']}
-              onChange={handleCheck}
-            />
-            uppercase
-          </label>
-          <label>
-            <input
-              id='selector-lower'
-              type={'checkbox'}
-              checked={charSelectors['lower']}
-              onChange={handleCheck}
-            />
-            lowercase
-          </label>
-          <label>
-            <input
-              id='selector-num'
-              type={'checkbox'}
-              checked={charSelectors['num']}
-              onChange={handleCheck}
-            />
-            numbers
-          </label>
-          <label>
-            <input
-              id='selector-!'
-              type={'checkbox'}
-              checked={charSelectors['!']}
-              onChange={handleCheck}
-            />
-            !
-          </label>
-          <label>
-            <input
-              id='selector-@'
-              type={'checkbox'}
-              checked={charSelectors['@']}
-              onChange={handleCheck}
-            />
-            @
-          </label>
-          <label>
-            <input
-              id='selector-$'
-              type={'checkbox'}
-              checked={charSelectors['$']}
-              onChange={handleCheck}
-            />
-            $
-          </label>
-          <label>
-            <input
-              id='selector-%'
-              type={'checkbox'}
-              checked={charSelectors['%']}
-              onChange={handleCheck}
-            />
-            %
-          </label>
-          <label>
-            <input
-              id='selector-&'
-              type={'checkbox'}
-              checked={charSelectors['&']}
-              onChange={handleCheck}
-            />
-            &
-          </label>
-          <label>
-            <input
-              id='selector-*'
-              type={'checkbox'}
-              checked={charSelectors['*']}
-              onChange={handleCheck}
-            />
-            *
-          </label>
-          <label>
-            <input
-              id='selector-?'
-              type={'checkbox'}
-              checked={charSelectors['?']}
-              onChange={handleCheck}
-            />
-            ?
-          </label>
-          <label>
-            <input
-              id='selector-#'
-              type={'checkbox'}
-              checked={charSelectors['#']}
-              onChange={handleCheck}
-            />
-            #
-          </label>
+          <SelectorHTML />
         </div>
 
-        <button onClick={generateRandom}>
+        <button onClick={generateRandomPassword}>
           <img src={lightning} alt='' />
           Generate Password
         </button>
