@@ -76,7 +76,7 @@ function App() {
 
     for (let i = 0; i < 4; i++) {
       let password = '';
-      if (availCharacters.length < 8) {
+      if (availCharacters.length < 6) {
         console.log(availCharacters.length);
         password = 'really?';
       } else {
